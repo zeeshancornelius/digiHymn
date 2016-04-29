@@ -19,7 +19,7 @@
 
         <link rel="stylesheet" href="css/bootstrap.css" />
         <link rel="stylesheet" href="css/style.css" />
-		
+        
     </head>
     <body>
 
@@ -148,15 +148,15 @@
                                                     </span> -->
                                                     <div style="width:78%">
                                                         <select  class = "comments-line" name="posChurch" style = "height:30px" >
-                                                        	<option>Language</option>
-                                                        	<option>English</option>
-                                                        	<option>Roman Urdu</option>
-                                                        	<option>Urdu</option>
-                                                        </select>	
+                                                            <option>Language</option>
+                                                            <option>English</option>
+                                                            <option>Roman Urdu</option>
+                                                            <option>Urdu</option>
+                                                        </select>   
                                                     </div>
                                                 </div>
                                             
-													
+                                                    
                                             </header>
                                                         
                                             <!-- <div class="release-info">
@@ -205,8 +205,8 @@
                                             </div> -->
                                         </div>
                                         <div class = "col-lg-12">
-                                        	<div class="search">
-													<input type="text" class="search-line opacity" name="s" placeholder="Search..."  style = "width:100%; height: 50px;" />
+                                            <div class="search">
+                                                    <input type="text" class="search-line opacity" name="s" placeholder="Search..."  style = "width:100%; height: 50px;" />
                                                 </div>
                                         </div>
                                         <div class="col-lg-5">
@@ -292,82 +292,86 @@
         <script src="js/jquery.swipebox.min.js" type="text/javascript"></script>
         <script src="js/jquery.mousewheel.js" type="text/javascript"></script>
 
-		<script>
-			
-				function transShow(el){
-					$(el).parents("tr").next().find(".translations").addClass("hidden");
-					$(el).parents("tr").next().find("."+$(el).val()).removeClass("hidden");
-					
-				}	
-				function myFunc(el){
-					var next = $(el).next(".trans");
-					$(el).next(".trans").empty();
-					$(next).next(".lyrics").empty();
-					var obj = {
-						hymn_id : $(el).attr("id"),
-						user_id : window.localStorage.getItem("user_id")
-					};
-					$.ajax({
-						type : 'post',
-						data : obj,
-						url : 'http://dostechnologies.com/demos/digiHymn/Hymn/hymn_phrase_for_app',
-						async : false,
-						success : function(response){
-							var col = '<td><div style="width:100%;"><select onchange = "transShow(this)"  class = "comments-line" name="posChurch" style = "height:30px; background: transparent" ><option>Translate</option><option value = "2">Roman Urdu</option><option value = "1">Urdu</option></select></div></td><td></td><td></td>';
-							var colu = '<td colspan="3"><h4>Lyrics</h4>';
-							var phrases = jQuery.parseJSON(response);
-							for (i = 0; i < phrases.length; i++) {
-								colu = colu + '<br><br><br>'+phrases[i].text;
-							    if(i == phrases.length-1){
-							    	colu = colu + '<br><br><br>'+phrases[i].text + '</td>';
-							    }
-								var obj1 = {
-										phrase_id : phrases[i].id,
-										user_id : window.localStorage.getItem("user_id")
-									};
-								$.ajax({
-									type : 'post',
-									data : obj1,
-									url : 'http://dostechnologies.com/demos/digiHymn/Hymn/hymn_phrase_trans_for_app',
-									async : false,
-									success : function(res){
-										var translations = jQuery.parseJSON(res);
-											for (x = 0; x < translations.length; x++) {
-												colu = colu + '<span class = "'+translations[x].language_id+' translations hidden" ><p style = "font-weight:bold">Translation</p>'+translations[x].text+'</span>';
-											}
-									}
-								});
-							}
-							$(el).next(".trans").append(col);
-							$(next).next(".lyrics").append(colu);
-						},
-						failure : function(){
-							alert("internal error");
-						}
-					});
-				}
-				$(document).ready(function(){
-					var obj = {
-						user_id : window.localStorage.getItem("user_id") 
-					};
-					$.ajax({
-						type : 'post',
-						data : obj,
-						url : 'http://dostechnologies.com/demos/digiHymn/Hymn/all_hymns_for_app',
-						success : function(response){
-							var hymns = jQuery.parseJSON(response);
-							for (i = 0; i < hymns.length; i++) {
-							    var col = '<tr id="'+hymns[i].id+'" class="" onclick="myFunc(this)" > <td><div>'+hymns[i].hymn_index+'</div></td><td>'+hymns[i].title+'</td><td>'+hymns[i].description+'</td></tr><tr class="trans"> </tr><tr class="lyrics"> <tr>';
-							    $("tbody").append(col);
-							}
-						},
-						failure : function(){
-							alert("internal error");
-						} 
-					});
-				});
-			
-		</script>
+        <script>
+            
+                function transShow(el){
+                    $(el).parents("tr").next().find(".translations").addClass("hidden");
+                    $(el).parents("tr").next().find("."+$(el).val()).removeClass("hidden");
+                    
+                }   
+                function myFunc(el){
+                    var next = $(el).next(".trans");
+                    $(el).next(".trans").empty();
+                    $(next).next(".lyrics").empty();
+                    var obj = {
+                        hymn_id : $(el).attr("id"),
+                        user_id : window.localStorage.getItem("user_id")
+                    };
+                    $.ajax({
+                        type : 'post',
+                        data : obj,
+                        url : 'http://dostechnologies.com/demos/digiHymn/Hymn/hymn_phrase_for_app',
+                        async : false,
+                        success : function(response){
+                            var col = '<td><div style="width:100%;"><select onchange = "transShow(this)"  class = "comments-line" name="posChurch" style = "height:30px; background: transparent" ><option>Translate</option><option value = "2">Roman Urdu</option><option value = "1">Urdu</option></select></div></td><td></td><td></td>';
+                            var colu = '<td colspan="3"><h4>Lyrics</h4>';
+                            var phrases = jQuery.parseJSON(response);
+                            for (i = 0; i < phrases.length; i++) {
+                                colu = colu + '<br><br><br>'+phrases[i].text;
+                                if(i == phrases.length-1){
+                                    colu = colu + '<br><br><br>'+phrases[i].text + '</td>';
+                                }
+                                var obj1 = {
+                                        phrase_id : phrases[i].id,
+                                        user_id : window.localStorage.getItem("user_id")
+                                    };
+                                $.ajax({
+                                    type : 'post',
+                                    data : obj1,
+                                    url : 'http://dostechnologies.com/demos/digiHymn/Hymn/hymn_phrase_trans_for_app',
+                                    async : false,
+                                    success : function(res){
+                                        var translations = jQuery.parseJSON(res);
+                                            for (x = 0; x < translations.length; x++) {
+                                                colu = colu + '<span class = "'+translations[x].language_id+' translations hidden" ><p style = "font-weight:bold">Translation</p>'+translations[x].text+'</span>';
+                                            }
+                                    }
+                                });
+                            }
+                            $(el).next(".trans").append(col);
+                            $(next).next(".lyrics").append(colu);
+                        },
+                        failure : function(){
+                            alert("internal error");
+                        }
+                    });
+                }
+                $(document).ready(function(){
+                    if(window.localStorage.getItem("user_id") != null){
+                        var obj = {
+                        user_id : window.localStorage.getItem("user_id") 
+                    };
+                    $.ajax({
+                        type : 'post',
+                        data : obj,
+                        url : 'http://dostechnologies.com/demos/digiHymn/Hymn/all_hymns_for_app',
+                        success : function(response){
+                            var hymns = jQuery.parseJSON(response);
+                            for (i = 0; i < hymns.length; i++) {
+                                var col = '<tr id="'+hymns[i].id+'" class="" onclick="myFunc(this)" > <td><div>'+hymns[i].hymn_index+'</div></td><td>'+hymns[i].title+'</td><td>'+hymns[i].description+'</td></tr><tr class="trans"> </tr><tr class="lyrics"> <tr>';
+                                $("tbody").append(col);
+                            }
+                        },
+                        failure : function(){
+                            alert("internal error");
+                        } 
+                    }); 
+                    }else{
+                        window.open("sign-in.html",'_self');
+                    }
+                });
+            
+        </script>
 
 
         <!-- ======================================================================
