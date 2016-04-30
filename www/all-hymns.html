@@ -300,6 +300,7 @@
                     
                 }   
                 function myFunc(el){
+                    $("html").addClass("loading");
                     var next = $(el).next(".trans");
                     $(el).next(".trans").empty();
                     $(next).next(".lyrics").empty();
@@ -311,7 +312,18 @@
                         type : 'post',
                         data : obj,
                         url : 'http://dostechnologies.com/demos/digiHymn/Hymn/hymn_phrase_for_app',
-                        async : false,
+                        xhrFields: {
+                                        onprogress: function (e) {
+                                            if (e.lengthComputable) {
+                                                var comp = e.loaded / e.total * 100;
+                                                console.log(comp);
+                                                if(comp == 100){
+                                                    $("html").removeClass("loading");               
+                                                }
+                                                
+                                            }
+                                        }
+                                    },
                         success : function(response){
                             var col = '<td><div style="width:100%;"><select onchange = "transShow(this)"  class = "comments-line" name="posChurch" style = "height:30px; background: transparent" ><option>Translate</option><option value = "2">Roman Urdu</option><option value = "1">Urdu</option></select></div></td><td></td><td></td>';
                             var colu = '<td colspan="3"><h4>Lyrics</h4>';
@@ -325,6 +337,7 @@
                                         phrase_id : phrases[i].id,
                                         user_id : window.localStorage.getItem("user_id")
                                     };
+
                                 $.ajax({
                                     type : 'post',
                                     data : obj1,
@@ -349,12 +362,24 @@
                 $(document).ready(function(){
                     if(window.localStorage.getItem("user_id") != null){
                         var obj = {
-                        user_id : window.localStorage.getItem("user_id") 
-                    };
+                            user_id : window.localStorage.getItem("user_id") 
+                        };
+                        $("html").addClass("loading");
                     $.ajax({
                         type : 'post',
                         data : obj,
                         url : 'http://dostechnologies.com/demos/digiHymn/Hymn/all_hymns_for_app',
+                        xhrFields: {
+                            onprogress: function (e) {
+                                if (e.lengthComputable) {
+                                    var completion = e.loaded / e.total * 100;
+                                    if(completion == 100){
+                                        $("html").removeClass("loading");               
+                                    }
+                                    
+                                }
+                            }
+                        },
                         success : function(response){
                             var hymns = jQuery.parseJSON(response);
                             for (i = 0; i < hymns.length; i++) {
