@@ -355,7 +355,7 @@
                         success : function(response){
                             var hymns = jQuery.parseJSON(response);
                             for (i = 0; i < hymns.length; i++) {
-                                var col = '<tr id="'+hymns[i].id+'" class="" onclick="myFunc(this)" > <td><div>'+hymns[i].hymn_index+'</div></td><td>'+hymns[i].title+'</td><td>'+hymns[i].description+'</td></tr><tr class="trans"> </tr><tr class="lyrics"> <tr><tr><td colspan = "3"><audio controls><source src="audios/Tuyo.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio><td></tr>';
+                                var col = '<tr id="'+hymns[i].id+'" class="" onclick="myFunc(this)" > <td><div>'+hymns[i].hymn_index+'</div></td><td>'+hymns[i].title+'</td><td>'+hymns[i].description+'</td></tr><tr class="trans"> </tr><tr class="lyrics"> <tr><tr><td colspan = "3"><audio controls><source src="http://dostechnologies.com/demos/digiHymn/assets/audios/Tuyo.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio><td></tr>';
                                 $("tbody").append(col);
                             }
                         },
